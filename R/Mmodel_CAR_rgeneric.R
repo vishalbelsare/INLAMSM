@@ -252,6 +252,7 @@ utils::globalVariables(c("k", "W", "alpha.min", "alpha.max"))
     param <- interpret.theta()
 
     # log-Prior for the autocorrelation parameter
+    # Note that log(alpha_max - alpha_min)'s have been omitted. 
     val <-  sum(-theta[as.integer(1:k)]
                - 2 * log(1 + exp(-theta[as.integer(1:k)]))
                )
