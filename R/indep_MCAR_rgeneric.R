@@ -221,7 +221,7 @@ utils::globalVariables(c("k", "W", "alpha.min", "alpha.max"))
     alpha <- alpha.min + (alpha.max - alpha.min) / (1 + exp(-theta[1L]))
 
     # Next k parameters are the marginal precisions.
-    mprec <- sapply(theta[as.integer(2:(k+1))], function(x) { exp(x) })
+    mprec <- sapply(theta[as.integer(2:(k + 1))], function(x) { exp(x) })
 
     # Diagonal precion matrix
     PREC <- diag(mprec, k)
@@ -271,6 +271,7 @@ utils::globalVariables(c("k", "W", "alpha.min", "alpha.max"))
     param <- interpret.theta()
 
     # log-Prior for the autocorrelation parameter
+    # Note that log(alpha_max - alpha_min) is not included.
     val <- - theta[1L] - 2 * log(1 + exp(-theta[1L]))
 
     #Uniform priors on the standard deviations
