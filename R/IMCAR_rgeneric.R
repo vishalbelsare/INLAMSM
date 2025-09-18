@@ -224,7 +224,7 @@ utils::globalVariables(c("k", "W", "alpha.min", "alpha.max"))
     #length non-diagonal elements
     n <- (k - 1) * k / 2
 
-    # intial matrix with 1s at the diagonal
+    # initial matrix with 1s at the diagonal
     M <- diag(1, k)
 
     #Adding correlation parameters (lower.tri) and (upper.tri)
@@ -237,7 +237,7 @@ utils::globalVariables(c("k", "W", "alpha.min", "alpha.max"))
     # Matrix of st. dev.
     st.dev.mat <- matrix(st.dev, ncol = 1) %*% matrix(st.dev, nrow = 1)
 
-    # Final inversed matrix
+    # Final inverse matrix
     M <- M * st.dev.mat
 
     # Inverting the matrix
@@ -293,7 +293,7 @@ utils::globalVariables(c("k", "W", "alpha.min", "alpha.max"))
     val <- 
       log(MCMCpack::dwish(W = param$PREC, v = 2 * k + 1, S = diag(rep(1, k)))) +
       sum(theta[as.integer(1:k)]) +  # This is for precisions
-      sum(log(2) + theta[-as.integer(1:k)] - 2 * log(1 + exp(theta[-as.integer(1:k)]))) # This is for correlation terms
+      sum(log(2) - theta[-as.integer(1:k)] - 2 * log(1 + exp(-theta[-as.integer(1:k)]))) # This is for correlation terms
 
     return (val)
   }

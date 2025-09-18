@@ -309,13 +309,14 @@ utils::globalVariables(c("k", "W", "alpha.min", "alpha.max"))
     param <- interpret.theta()
 
     # log-Prior for the autocorrelation parameter
+    # Note that log(alpha_max-alpha_min) has been omitted.
     val <- - theta[1L] - 2 * log(1 + exp(-theta[1L]))
 
     # Whishart prior for joint matrix of hyperparameters
     val <- val + 
       log(MCMCpack::dwish(W = param$PREC, v =  k, S = diag(rep(1, k)))) +
       sum(theta[as.integer(2:(k + 1))]) +  # This is for precisions
-      sum(log(2) + theta[-as.integer(1:(k + 1))] - 2 * log(1 + exp(theta[-as.integer(1:(k + 1))])))  # This is for correlation terms
+      sum(log(2) - theta[-as.integer(1:(k + 1))] - 2 * log(1 + exp(-theta[-as.integer(1:(k + 1))])))  # This is for correlation terms
 
     return (val)
   }
